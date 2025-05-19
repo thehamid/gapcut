@@ -13,16 +13,16 @@ const networkColors = {
   "صداوسیما": "bg-white-600",
   "فیلم نت": "bg-red-600",
   "شیدا": "bg-purple-600",
+  "استارنت": "bg-pink-600",
   // Add more networks and their corresponding colors as needed
 
 }
 
 export function TVCalendar({ list }) {
-  const days = ["شنبه", "یکشنبه", "دوشنبه", "سه شنبه", "چهارشنبه", "پنج شنبه", "جمعه"]
+  const days = ["شنبه", "یکشنبه", "دوشنبه", "سه شنبه", "چهارشنبه", "پنجشنبه", "جمعه"]
 
   const [shows, setShows] = useState(list)
 
-console.log(shows)
 
   // Group shows by day
   
@@ -86,7 +86,7 @@ const showsByDay = days.map((day) => ({
                             <h4 className="text-xs font-medium text-center line-clamp-1 text-white">{show.title}</h4>
                           </div>
                           <div
-                            className={`text-xs px-2 py-0.5 text-white rounded-full mt-1 ${networkColors[show?.network[0]?.title] || "bg-red-600"}`}
+                            className={`text-xs px-2 py-0.5 text-white rounded-full mt-1 ${networkColors[show?.network[0]?.title] || "bg-zinc-600"}`}
                           >
                             {show?.network[0]?.title}
                           </div>

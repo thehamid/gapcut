@@ -48,11 +48,14 @@ const mediaSchema = new Schema(
     link: String,
     runtime: String,
     schedule: String,
-    watchLinkTitle: String,
-    watchLinkLogo: String,
-    watchLink: String,
     videoTizer: String,
     instagram: String,
+    watchLink: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "WatchLink",
+      },
+    ],
     network: [
       {
         type: mongoose.Types.ObjectId,
@@ -74,6 +77,24 @@ const mediaSchema = new Schema(
   },
   { timestamps: true }
 );
+
+// Schema
+const watchlinkSchema = new Schema(
+  {
+      title: {
+      type: String,
+      required: true,
+    },
+    link: {
+      type: String,
+      required: true,
+    },
+    type: String,
+    logo: String,
+  },
+  { timestamps: true }
+);
+
 
 // Schema
 const genreSchema = new Schema(
@@ -103,6 +124,7 @@ const networkSchema = new Schema(
     },
     type: String,
     logo: String,
+    color: String,
   },
   { timestamps: true }
 );
@@ -309,6 +331,8 @@ const seenSchema = new Schema(
 
 export const Media =
   mongoose.models?.Media || mongoose.model("Media", mediaSchema);
+export const Watchlink =
+  mongoose.models?.Watchlink || mongoose.model("Watchlink", watchlinkSchema);
 export const Genre =
   mongoose.models?.Genre || mongoose.model("Genre", genreSchema);
 export const Network =

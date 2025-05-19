@@ -9,6 +9,7 @@ import Casting from "@/components/dashboard/medias/components/casting";
 import Photos from "@/components/dashboard/medias/components/photos";
 import Season from "@/components/dashboard/medias/components/season";
 import Episode from "@/components/dashboard/medias/components/episode";
+import WatchLink from "@/components/dashboard/medias/components/watchlink";
 import { LuXSquare } from "react-icons/lu";
 
 const EditMedia = () => {
@@ -25,7 +26,6 @@ const EditMedia = () => {
   const LinkRef = useRef();
   const runtimeRef = useRef();
   const scheduleRef = useRef();
-  const watchLinkRef = useRef();
   const instagramRef = useRef();
   const slugRef = useRef();
   const tagsRef = useRef();
@@ -173,7 +173,6 @@ const EditMedia = () => {
       link: LinkRef.current.value,
       runtime: runtimeRef.current.value,
       schedule: scheduleRef.current.value,
-      watchLink: watchLinkRef.current.value,
       videoTizer:tizerRef.current.value,
       instagram: instagramRef.current.value,
       tags: tag,
@@ -295,6 +294,13 @@ const EditMedia = () => {
                             {/* casting */}
                         <Casting media_id={med_id} />
                       </div>
+
+                      <div className="flex flex-col gap-1 bg-zinc-700 p-4 mb-3 rounded-md ">
+                            {/* WatchLink */}
+                        <WatchLink media_id={med_id} />
+                      </div>
+
+
                     </div>
 
                     {/* sidebar */}
@@ -391,16 +397,7 @@ const EditMedia = () => {
                           name="instagram"
                         />
                       </div>
-                      <div className="mb-4">
-                        <label className="text-sm">لینک نمایش</label>
-                        <input
-                          ref={watchLinkRef}
-                          defaultValue={oldData.watchLink}
-                          type="text"
-                          className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md"
-                          name="watchLink"
-                        />
-                      </div>
+                 
                       <div className="mb-4">
                         <label className="text-sm">لینک تیزر</label>
                         <input

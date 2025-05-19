@@ -55,7 +55,7 @@ const Episode = ({ media_id }) => {
       episode_number: episodeNumberRef.current.value,
       season_number: seasonNumberRef.current.value,
       airdate: airdateRef.current.value,
-      cover:cover == "" ? "/image/avatr-holder.jpg" : cover,
+      cover:cover == "" ? "/image/avatar-holder.jpg" : cover,
      
     };
     const response = await fetch(`/api/dashboard/medias/episodes`, {
@@ -132,7 +132,7 @@ const Episode = ({ media_id }) => {
         episode_number: episodeNumberRef.current.value,
         season_number: seasonNumberRef.current.value,
         airdate: airdateRef.current.value,
-        cover:cover == "" ? "/image/avatr-holder.jpg" : cover,
+        cover:cover == "" ? "/image/avatar-holder.jpg" : cover,
     };
 
     const response = await fetch(`/api/dashboard/medias/episodes/${edid}`, {

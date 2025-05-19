@@ -21,7 +21,6 @@ const NewMedia = () => {
   const LinkRef = useRef();
   const runtimeRef = useRef();
   const scheduleRef = useRef();
-  const watchLinkRef = useRef();
   const instagramRef = useRef();
   const slugRef = useRef();
   const tagsRef = useRef();
@@ -141,7 +140,6 @@ const NewMedia = () => {
       link:LinkRef.current.value,
       runtime:runtimeRef.current.value,
       schedule:scheduleRef.current.value,
-      watchLink:watchLinkRef.current.value,
       videoTizer:tizerRef.current.value,
       instagram:instagramRef.current.value,
       tags:tag,
@@ -309,15 +307,7 @@ const NewMedia = () => {
                         name="instagram"
                       />
                     </div>
-                    <div className="mb-4">
-                      <label className="text-sm">لینک نمایش</label>
-                      <input
-                        ref={watchLinkRef}
-                        type="text"
-                        className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md"
-                        name="watchLink"
-                      />
-                    </div>
+        
                     <div className="mb-4">
                       <label className="text-sm">لینک تیزر</label>
                       <input

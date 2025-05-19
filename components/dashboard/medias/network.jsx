@@ -3,15 +3,20 @@ import { useRef, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import Link from "next/link";
 import { LuTrash, LuPen, LuEye } from "react-icons/lu";
+import ImageSelector from "@/components/formElement/image-selector";
+import Image from "next/image";
 
 const Network = () => {
   const titleRef = useRef();
   const slugRef = useRef();
+  const colorRef = useRef();
 
   const [networks, setNetwork] = useState([]);
   const [reload, setReload] = useState(false);
   const [edit, setEdit] = useState(false);
   const [id, setID] = useState();
+  const [selectedType, setSelectedType] = useState('');
+  const [logo, setLogo] = useState('');
 
   useEffect(() => {
     async function fetchData() {
@@ -30,6 +35,9 @@ const Network = () => {
     const formData = {
       title: titleRef.current.value == "" ? undefined : titleRef.current.value,
       slug: slugRef.current.value == "" ? undefined : slugRef.current.value,
+      type: selectedType,
+      color: colorRef.current.value == "" ? undefined : colorRef.current.value,
+      logo: logo == "" ? "/image/avatar-holder.jpg" : logo,
     };
 
     const response = await fetch(`/api/dashboard/medias/networks`, {
@@ -46,6 +54,7 @@ const Network = () => {
       setReload(true);
       titleRef.current.value = "";
       slugRef.current.value = "";
+      colorRef.current.value = "";
     } else if (response.status === 402) {
       toast.error(responseData.data);
     } else if (response.status === 500) {
@@ -54,11 +63,14 @@ const Network = () => {
   };
 
   // Delete Cat
-  const edithandler = (id, title, slug) => {
+  const edithandler = (id, title, slug , type,color,logo) => {
     setEdit(true);
     setID(id);
     titleRef.current.value = title;
     slugRef.current.value = slug;
+    colorRef.current.value = color;
+    setLogo(logo);
+    setSelectedType(type);
   };
 
   //Edit Category
@@ -67,6 +79,9 @@ const Network = () => {
     const formData = {
       title: titleRef.current.value == "" ? undefined : titleRef.current.value,
       slug: slugRef.current.value == "" ? undefined : slugRef.current.value,
+      type: selectedType,
+      color: colorRef.current.value == "" ? undefined : colorRef.current.value,
+      logo: logo == "" ? "/image/avatar-holder.jpg" : logo,
     };
 
     const response = await fetch(`/api/dashboard/medias/networks/${id}`, {
@@ -103,6 +118,14 @@ const Network = () => {
     setReload(true);
   };
 
+
+  //radio buttons handler
+  const handletypeChange = (event) => {
+    setSelectedType(event.target.value);
+  };
+
+
+
   return (
     <div>
       <h2 className="mb-4 text-xl border-b-[1px] border-zinc-600">
@@ -137,6 +160,58 @@ const Network = () => {
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md"
                   name="slug"
                 />
+              </div>
+            </div>
+            <div class="col-span-4 pt-4">
+              <div class="mb-4">
+                <label class="text-sm">
+                  نوع خدمات
+                </label>
+                <div className="flex flex-col gap-2">
+                  <label className="inline-flex items-center">
+                    <input
+                      type="radio"
+                      className="form-radio h-5 w-5 text-red-600"
+                      name="radio-group"
+                      value="free"
+                      checked={selectedType === 'free'}
+                      onChange={handletypeChange}
+                    />
+                    <span className="ml-2 text-sm text-gray-300">رایگان</span>
+                  </label>
+
+                  <label className="inline-flex items-center">
+                    <input
+                      type="radio"
+                      className="form-radio h-5 w-5 text-red-600"
+                      name="radio-group"
+                      value="subscription"
+                      checked={selectedType === 'subscription'}
+                      onChange={handletypeChange}
+                    />
+                    <span className="ml-2 text-sm text-gray-300">اشتراکی</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="col-span-4 pt-4">
+              <div class="mb-4">
+                <label class="text-sm">
+                  رنگ سازمانی
+                </label>
+                <input
+                  ref={colorRef}
+                  placeholder="bg-zinc-600"
+                  type="text"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md"
+                  name="slug"
+                />
+              </div>
+            </div>
+            <div class="col-span-4 pt-4">
+              <div className="mb-4 max-w-16">
+                <label className="text-sm">لوگو</label>
+                <ImageSelector saveImage={setLogo} src={logo} />
               </div>
             </div>
             <div class="col-span-4 mt-12">
@@ -179,6 +254,57 @@ const Network = () => {
                 />
               </div>
             </div>
+                   <div class="col-span-4 pt-4">
+              <div class="mb-4">
+                <label class="text-sm">
+                  نوع خدمات
+                </label>
+                <div className="flex flex-col gap-2">
+                  <label className="inline-flex items-center">
+                    <input
+                      type="radio"
+                      className="form-radio h-5 w-5 text-red-600"
+                      name="radio-group"
+                      value="free"
+                      checked={selectedType === 'free'}
+                      onChange={handletypeChange}
+                    />
+                    <span className="ml-2 text-sm text-gray-300">رایگان</span>
+                  </label>
+
+                  <label className="inline-flex items-center">
+                    <input
+                      type="radio"
+                      className="form-radio h-5 w-5 text-red-600"
+                      name="radio-group"
+                      value="subscription"
+                      checked={selectedType === 'subscription'}
+                      onChange={handletypeChange}
+                    />
+                    <span className="ml-2 text-sm text-gray-300">اشتراکی</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="col-span-4 pt-4">
+              <div class="mb-4">
+                <label class="text-sm">
+                  رنگ سازمانی
+                </label>
+                <input
+                  ref={colorRef}
+                  type="text"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md"
+                  name="slug"
+                />
+              </div>
+            </div>
+            <div class="col-span-4 pt-4">
+              <div className="mb-4 max-w-16">
+                <label className="text-sm">لوگو</label>
+                <ImageSelector saveImage={setLogo} src={logo} />
+              </div>
+            </div>
             <div class="col-span-4 mt-12">
               <button
                 type="submit"
@@ -209,6 +335,7 @@ const Network = () => {
                 <tr>
                   <th class="p-3">عنوان دسته</th>
                   <th class="p-3 ">نامک</th>
+                  <th class="p-3 "> نوع/ رنگ</th>
                   <th class="p-3 ">تعداد مدیا</th>
                   <th class="p-3 ">عملیات</th>
                 </tr>
@@ -216,12 +343,22 @@ const Network = () => {
               <tbody>
                 {networks.map((item, index) => (
                   <tr key={index} class="bg-zinc-800 text-center">
-                    <td class="p-3">
+                    <td class=" flex items-center gap-3 p-3">
+                      <Image src={item.logo || "/images/avatar-holder.jpg"} alt={item.title} width={50} height={50} />
                       <div class="font-bold text-white">{item.title}</div>
                     </td>
                     <td class="p-3">{item.slug}</td>
-                    <td class="p-3">0</td>
+                    <td class="p-3">
+                      <span
+                        className={`text-xs px-2 py-0.5 text-white rounded-full ${item.color || "bg-zinc-600"}`}
+                      >
+                        {item.type}
+                      </span>
 
+                    </td>
+
+
+                    <td class="p-3">0</td>
                     <td class="p-3 flex justify-center">
                       <Link
                         href={`/media/networks/${item.slug}`}
@@ -232,7 +369,7 @@ const Network = () => {
                       </Link>
                       <span
                         onClick={() =>
-                          edithandler(item._id, item.title, item.slug)
+                          edithandler(item._id, item.title, item.slug , item.type, item.color, item.logo)
                         }
                         class="text-gray-400 hover:text-gray-100  mx-2 cursor-pointer"
                       >
